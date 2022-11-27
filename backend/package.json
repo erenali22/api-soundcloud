@@ -30,12 +30,12 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "per-env": "^1.0.2",
-    "sequelize": "^6.25.5"
+    "sequelize": "^6.25.5",
+    "sequelize-cli": "^6.5.2"
   },
   "devDependencies": {
     "dotenv-cli": "^6.0.0",
     "nodemon": "^2.0.20",
-    "sequelize-cli": "^6.5.2",
     "sqlite3": "^5.1.2"
   }
 }
