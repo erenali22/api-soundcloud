@@ -3,7 +3,7 @@ const { Song, Album, Comment } = require('../../db/models');
 const { makeError } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { query } = require("express-validator/check");
-const { handleValidationErrors } = require("../../utils/validation");
+const { handleValidationErrors, requireAuth } = require("../../utils/validation");
 
 const validateSong = [
   check('title')
