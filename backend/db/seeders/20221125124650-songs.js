@@ -4,13 +4,13 @@ const { QueryTypes } = require('sequelize');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    const userIdArray = await queryInterface.sequelize.query('select id from Users', { type: QueryTypes.SELECT })
-    const albumIdArray = await queryInterface.sequelize.query('select id from Albums', { type: QueryTypes.SELECT })
+    // const userIdArray = await queryInterface.sequelize.query('select id from Users', { type: QueryTypes.SELECT })
+    // const albumIdArray = await queryInterface.sequelize.query('select id from Albums', { type: QueryTypes.SELECT })
     const data = []
-    for (let i = 0; i < 10; ++i) {
+    for (let i = 1; i < 9; ++i) {
       data.push({
-        userId: userIdArray[Math.floor(Math.random() * userIdArray.length).toFixed(0)].id,
-        albumId: albumIdArray[Math.floor(Math.random() * albumIdArray.length).toFixed(0)].id,
+        userId: i,
+        albumId: i,
         title: `Song Title ${i}`,
         description: `Song Description ${i}`,
         url: `http://example.io/song/${i}`,

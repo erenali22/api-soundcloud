@@ -12,8 +12,6 @@ module.exports = {
         lastName: 'LastName${i}',
         email: `demo${i}@user.io`,
         hashedPassword: bcrypt.hashSync('password'),
-        createdAt: new Date(),
-        updatedAt: new Date(),
       })
     }
     await queryInterface.bulkInsert('Users', data)
