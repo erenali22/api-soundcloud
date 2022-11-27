@@ -40,10 +40,10 @@ module.exports = (sequelize, DataTypes) => {
       return await User.scope("currentUser").findByPk(user.id);
     }
     static associate(models) {
-      this.hasMany(models.Album, { foreignKey: "userId" })
-      this.hasMany(models.Comment, { foreignKey: "userId" })
-      this.hasMany(models.Song, { foreignKey: "userId" })
-      this.hasMany(models.Playlist, { foreignKey: "userId" })
+      User.hasMany(models.Album, { foreignKey: "userId" })
+      User.hasMany(models.Comment, { foreignKey: "userId" })
+      User.hasMany(models.Song, { foreignKey: "userId" })
+      User.hasMany(models.Playlist, { foreignKey: "userId" })
     }
   }
 
@@ -104,6 +104,6 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
   );
-  
+
   return User;
 };
