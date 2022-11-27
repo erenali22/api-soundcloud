@@ -1,11 +1,9 @@
 const express = require("express");
 
-const { setTokenCookie, requireAuth } = require("../../utils/auth");
-const { User } = require("../../db/models");
+const { setTokenCookie, generateToken, makeError } = require("../../utils/auth");
+const { User, Song, Playlist } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
-
-const router = express.Router();
 
 const validateSignup = [
   check("email")
@@ -34,22 +32,79 @@ const validateSignup = [
   handleValidationErrors,
 ];
 
+const router = express.Router();
+
 // Sign up
-router.post("/", validateSignup, async (req, res) => {
+router.post("/", validateSignup, async (req, res, next) => {
   const { email, password, username, firstName, lastName } = req.body;
+  const existing = await User.findOne({ where: { email } })
+  if (existing) {
+    return next(makeError(
+      'User already exists', 403,
+      {
+        "email": "User with that email already exists"
+      }
+    ))
+  }
   const user = await User.signup({
     email,
     username,
     password,
     firstName,
     lastName,
-});
+  });
 
-  await setTokenCookie(res, user);
+  const token = generateToken(user)
+  setTokenCookie(res, token);
 
   return res.json({
-    user: user,
+    ...user.toSafeObject(),
+    token,
   });
 });
+
+// Get details of an Artist from an id
+router.get("/:userId", async (req, res, next) => {
+  const { userId } = req.params
+  const user = await User.findByPk(userId)
+  if (!user) {
+    return next(makeError('Artist couldn\'t be found', 404))
+  }
+  return res.json(user)
+})
+
+// Get all Songs of an Artist from an id
+router.get("/:userId/songs", async (req, res, next) => {
+  const { userId } = req.params
+  const user = await User.findByPk(userId)
+  if (!user) {
+    return next(makeError('Artist couldn\'t be found', 404))
+  }
+  return res.json({
+    Songs: await Song.findAll({ where: { userId } })
+  })
+})
+
+// Get details of an Artist from an id
+router.get("/:userId", async (req, res, next) => {
+  const { userId } = req.params
+  const user = await User.findByPk(userId)
+  if (!user) {
+    return next(makeError('Artist couldn\'t be found', 404))
+  }
+  return res.json(user)
+})
+
+// Get all Playlists of an Artist from an id
+router.get("/:userId/playlists", async (req, res, next) => {
+  const { userId } = req.params
+  const user = await User.findByPk(userId)
+  if (!user) {
+    return next(makeError('Artist couldn\'t be found', 404))
+  }
+  return res.json({
+    Playlists: await Playlist.findAll({ where: { userId } })
+  })
+})
 
 module.exports = router;

@@ -6,6 +6,14 @@
 
 ## API Documentation
 
+## To start testing, please run the following commands in your terminal:
+
+```json
+1. cd backend/
+2. npm install
+3. npm run start:development
+```
+
 ## USER AUTHENTICATION/AUTHORIZATION
 
 ### All endpoints that require authentication
@@ -47,105 +55,6 @@ correct role(s) or permission(s).
     }
     ```
 
-### Get the Current User
-
-Returns the information about the current user that is logged in.
-
-- Require Authentication: true
-- Request
-
-  - Method: GET
-  - URL: /api/me
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Smith",
-      "email": "john.smith@gmail.com",
-      "username": "JohnSmith"
-    }
-    ```
-
-### Log In a User
-
-Logs in a current user with valid credentials and returns the current user's
-information.
-
-- Require Authentication: false
-- Request
-
-  - Method: POST
-  - URL: /api/login
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "credential": "john.smith@gmail.com",
-      "password": "secret password"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Smith",
-      "email": "john.smith@gmail.com",
-      "username": "JohnSmith",
-      "token": ""
-    }
-    ```
-
-- Error Response: Invalid credentials
-
-  - Status Code: 401
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Invalid credentials",
-      "statusCode": 401
-    }
-    ```
-
-- Error response: Body validation errors
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "credential": "Email or username is required",
-        "password": "Password is required"
-      }
-    }
-    ```
-
 ### Sign Up a User
 
 Creates a new user, logs them in as the current user, and returns the current
@@ -155,7 +64,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: /api/new/user
+  - URL: /api/users
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -242,6 +151,105 @@ user's information.
     }
     ```
 
+### Log In a User
+
+Logs in a current user with valid credentials and returns the current user's
+information.
+
+- Require Authentication: false
+- Request
+
+  - Method: POST
+  - URL: /api/session
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "credential": "john.smith@gmail.com",
+      "password": "secret password"
+    }
+    ```
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "username": "JohnSmith",
+      "token": ""
+    }
+    ```
+
+- Error Response: Invalid credentials
+
+  - Status Code: 401
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Invalid credentials",
+      "statusCode": 401
+    }
+    ```
+
+- Error response: Body validation errors
+
+  - Status Code: 400
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Validation error",
+      "statusCode": 400,
+      "errors": {
+        "credential": "Email or username is required",
+        "password": "Password is required"
+      }
+    }
+    ```
+
+### Get the Current User
+
+Returns the information about the current user that is logged in.
+
+- Require Authentication: true
+- Request
+
+  - Method: GET
+  - URL: /api/session
+  - Body: none
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1,
+      "firstName": "John",
+      "lastName": "Smith",
+      "email": "john.smith@gmail.com",
+      "username": "JohnSmith"
+    }
+    ```
+
 ## SONGS
 
 ### Get all Songs
@@ -288,7 +296,7 @@ Returns all the songs created by the current user.
 - Request
 
   - Method: GET
-  - URL: /api/my/songs
+  - URL: /api/songs/current
   - Body: none
 
 - Successful Response
@@ -324,7 +332,7 @@ Returns all the songs created by the specified artist.
 - Request
 
   - Method: GET
-  - URL: /api/artists/:artistId/songs
+  - URL: /api/users/:userId/songs
   - Body: none
 
 - Successful Response
@@ -430,7 +438,7 @@ Creates and returns a new song with or without an album.
 - Request
 
   - Method: POST
-  - URL: /api/song
+  - URL: /api/songs
   - Headers:
     - Content-Type: application/json
   - Body without an album:
@@ -638,7 +646,7 @@ Returns all the playlists created by the specified artist.
 - Request
 
   - Method: GET
-  - URL: /api/artists/:artistId/playlists
+  - URL: /api/users/:userId/playlists
   - Body: none
 
 - Successful Response
@@ -996,57 +1004,6 @@ Returns all the playlists created by the current user.
 
 ## COMMENTS
 
-### Get all Comments by a Song's id
-
-Returns all the comments that belong to a song specified by id.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: /api/songs/:songId/comments
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Comments": [
-        {
-          "id": 1,
-          "userId": 1,
-          "songId": 1,
-          "body": "I love this song!",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "User": {
-            "id": 1,
-            "username": "JohnSmith"
-          }
-        }
-      ]
-    }
-    ```
-
-- Error response: Couldn't find a Song with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Song couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
 ### Create a Comment for a Song based on the Song's id
 
 Create and return a new comment for a song specified by id.
@@ -1098,6 +1055,57 @@ Create and return a new comment for a song specified by id.
       "errors": {
         "body": "Comment body text is required"
       }
+    }
+    ```
+
+- Error response: Couldn't find a Song with the specified id
+
+  - Status Code: 404
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Song couldn't be found",
+      "statusCode": 404
+    }
+    ```
+
+### Get all Comments by a Song's id
+
+Returns all the comments that belong to a song specified by id.
+
+- Require Authentication: false
+- Request
+
+  - Method: GET
+  - URL: /api/songs/:songId/comments
+  - Body: none
+
+- Successful Response
+
+  - Status Code: 200
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "Comments": [
+        {
+          "id": 1,
+          "userId": 1,
+          "songId": 1,
+          "body": "I love this song!",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36",
+          "User": {
+            "id": 1,
+            "username": "JohnSmith"
+          }
+        }
+      ]
     }
     ```
 
@@ -1302,7 +1310,7 @@ Returns all the albums created by the specified artist.
 - Request
 
   - Method: GET
-  - URL: /api/artists/:artistId/albums
+  - URL: /api/artists/:userId/albums
   - Body: none
 
 - Successful Response
@@ -1575,7 +1583,7 @@ Deletes an existing album.
 
 ## ARTISTS
 
-### Get details of an Artist from an id
+### Get details of an Artist(User) from an id
 
 Returns the details of an artist specified by their id.
 
@@ -1583,7 +1591,7 @@ Returns the details of an artist specified by their id.
 - Request
 
   - Method: GET
-  - URL: /api/artists/:artistId
+  - URL: /api/users/:userId
   - Body: none
 
 - Successful Response

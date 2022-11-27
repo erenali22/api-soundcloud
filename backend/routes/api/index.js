@@ -1,20 +1,30 @@
-// backend/routes/api/index.js
-const router = require("express").Router();
-const sessionRouter = require("./session.js");
-const usersRouter = require("./users.js");
-const { restoreUser } = require("../../utils/auth.js");
+const router = require('express').Router();
+const sessionRouter = require('./session.js');
+const usersRouter = require('./users.js');
+const songsRouter = require('./songs.js');
+const albumsRouter = require('./albums.js');
+const artistsRouter = require('./artists.js');
+const commentRouter = require('./comments.js');
+const playlistRouter = require('./playlists.js');
+const { restoreUser, requireAuth } = require("../../utils/auth.js");
 
-// Connect restoreUser middleware to the API router
-// If current user session is valid, set req.user to the user in the database
-// If current user session is not valid, set req.user to null
 router.use(restoreUser);
+router.use(requireAuth)
 
-router.use("/session", sessionRouter);
+router.use('/session', sessionRouter);
+router.use('/users', usersRouter);
+router.use('/songs', songsRouter);
+router.use('/albums', albumsRouter);
+router.use('/artists', artistsRouter);
+router.use('/comments', commentRouter);
+router.use('/playlists', playlistRouter);
 
-router.use("/users", usersRouter);
-
-router.post("/test", (req, res) => {
-  res.json({ requestBody: req.body });
+router.get("/csrf/restore", (req, res) => {
+  const csrfToken = req.csrfToken();
+  res.cookie("XSRF-TOKEN", csrfToken);
+  res.status(200).json({
+    "XSRF-Token": csrfToken,
+  });
 });
 
 module.exports = router;

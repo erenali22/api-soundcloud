@@ -5,14 +5,28 @@ const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-
 const { environment } = require("./config");
 const isProduction = environment === "production";
-const app = express();
+const { ValidationError } = require("sequelize");
+const { makeError } = require("./utils/auth");
 
+const app = express();
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
+
+const routes = require("./routes");
+
+// Set the _csrf token and create req.csrfToken method
+app.use(
+  csurf({
+    cookie: {
+      secure: isProduction,
+      sameSite: isProduction && "Lax",
+      httpOnly: true,
+    },
+  }),
+);
 
 // Security Middleware
 if (!isProduction) {
@@ -27,57 +41,26 @@ app.use(
   }),
 );
 
-// Set the _csrf token and create req.csrfToken method
-app.use(
-  csurf({
-    cookie: {
-      secure: isProduction,
-      sameSite: isProduction && "Lax",
-      httpOnly: true,
-    },
-  }),
-);
-
-const routes = require("./routes");
-
 app.use(routes); // Connect all the routes
 
 // Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
-    const err = new Error("The requested resource couldn't be found.");
-    err.title = "Resource Not Found";
-    err.errors = ["The requested resource couldn't be found."];
-    err.status = 404;
-    next(err);
-  });
-
-// backend/app.js
-// ...
-const { ValidationError } = require('sequelize');
-
-// ...
+  next(makeError("The requested resource couldn't be found.", 404))
+});
 
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
   // check if error is a Sequelize error:
   if (err instanceof ValidationError) {
-    err.errors = err.errors.map((e) => e.message);
-    err.title = 'Validation error';
+    return next(makeError('Validation error', 400, err.errors.map((e) => e.message)))
   }
   next(err);
 });
 
-
 // Error formatter
 app.use((err, _req, res, _next) => {
-    res.status(err.status || 500);
-    console.error(err);
-    res.json({
-      title: err.title || 'Server Error',
-      message: err.message,
-      errors: err.errors,
-      stack: isProduction ? null : err.stack
-    });
-  });
+  res.status(err.statusCode || 500);
+  res.json(err);
+});
 
 module.exports = app;

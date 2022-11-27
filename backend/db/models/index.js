@@ -27,12 +27,14 @@ fs
   });
 
 Object.keys(db).forEach(modelName => {
+  if (!config.env || config.env === 'development') {
+    db[modelName].sync()
+  }
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 module.exports = db;
