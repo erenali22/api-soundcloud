@@ -71,6 +71,7 @@ router.get(
 // Get all Songs created by the Current User
 router.get(
   '/current',
+  requireAuth,
   async (req, res) => {
     const { user } = req
     return res.json(

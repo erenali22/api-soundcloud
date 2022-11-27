@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const { jwtConfig } = require('../config');
-const { User } = require('../db/models');
+const jwt = require("jsonwebtoken");
+const { jwtConfig } = require("../config");
+const { User } = require("../db/models");
 
 const { secret, expiresIn } = jwtConfig;
 
@@ -8,28 +8,28 @@ const makeError = (message, statusCode, errors) => {
   return {
     message,
     statusCode,
-    errors
-  }
-}
+    errors,
+  };
+};
 
 const generateToken = (user) => {
   // Create the token.
   const token = jwt.sign(
     { data: user.toSafeObject() },
-    'my secret',
-    { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
+    "my secret",
+    { expiresIn: parseInt(expiresIn) }, // 604,800 seconds = 1 week
   );
-  return token
-}
+  return token;
+};
 
 // Sends a JWT Cookie
 const setTokenCookie = (res, token) => {
   const isProduction = process.env.NODE_ENV === "production";
-  res.cookie('token', token, {
+  res.cookie("token", token, {
     maxAge: expiresIn * 1000, // maxAge in milliseconds
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction && "Lax"
+    sameSite: isProduction && "Lax",
   });
   return token;
 };
@@ -46,29 +46,33 @@ const restoreUser = (req, res, next) => {
     }
     try {
       const { id } = jwtPayload.data;
-      req.user = await User.scope('currentUser').findByPk(id);
+      req.user = await User.scope("currentUser").findByPk(id);
     } catch (e) {
-      res.clearCookie('token');
+      res.clearCookie("token");
       return next();
     }
-    if (!req.user) res.clearCookie('token');
+    if (!req.user) res.clearCookie("token");
     return next();
   });
 };
 
-const requireAuth = function (req, _res, next) {
-  if (req.user) return next();
-  const originalUrl = req.originalUrl
-  if (originalUrl === '/api/users' && req.method === 'POST') {
-    return next();
-  } else if (originalUrl === '/api/session' && req.method === 'POST') {
-    return next();
-  } else if (originalUrl === '/api/csrf/restore' && req.method === 'GET') {
-    return next();
-  }
-  return next(makeError(
-    'Authentication required', 401
-  ))
-};
+const requireAuth = [
+  restoreUser,
+  function (req, _res, next) {
+    if (req.user) return next();
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, makeError, generateToken };
+    const err = new Error("Unauthorized");
+    err.title = "Unauthorized";
+    err.errors = ["Unauthorized"];
+    err.status = 401;
+    return next(err);
+  },
+];
+
+module.exports = {
+  setTokenCookie,
+  restoreUser,
+  requireAuth,
+  makeError,
+  generateToken,
+};
