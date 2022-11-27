@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
-    const userIdArray = await queryInterface.sequelize.query('select id from Users', { type: QueryTypes.SELECT })
+    // const userIdArray = await queryInterface.sequelize.query('select id from Users', { type: QueryTypes.SELECT })
     const data = []
     for (let i = 0; i < 10; ++i) {
       data.push({
