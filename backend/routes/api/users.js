@@ -21,13 +21,29 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage("Password must be 6 characters or more."),
+  check("firstName")
+    .matches(/^[\w\s]+$/)
+    .withMessage("First name must be word characters.")
+    .exists({ checkFalsy: true })
+    .withMessage("First Name cannot be empty."),
+  check("lastName")
+    .matches(/^[\w\s]+$/)
+    .withMessage("Last name must be word characters.")
+    .exists({ checkFalsy: true })
+    .withMessage("Last name cannot be empty."),
   handleValidationErrors,
 ];
 
 // Sign up
 router.post("/", validateSignup, async (req, res) => {
-  const { email, password, username } = req.body;
-  const user = await User.signup({ email, username, password });
+  const { email, password, username, firstName, lastName } = req.body;
+  const user = await User.signup({
+    email,
+    username,
+    password,
+    firstName,
+    lastName,
+});
 
   await setTokenCookie(res, user);
 
