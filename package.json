@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/erenali22/api-soundcloud/issues"
   },
-  "homepage": "https://github.com/erenali22/api-soundcloud#readme"
+  "homepage": "https://github.com/erenali22/api-soundcloud#readme",
+  "dependencies": {
+    "pg": "^8.8.0"
+  }
 }
