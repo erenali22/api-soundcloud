@@ -8,7 +8,7 @@ module.exports = {
     const data = []
     for (let i = 0; i < 10; ++i) {
       data.push({
-        userId: userIdArray[Math.floor(Math.random() * userIdArray.length).toFixed(0)].id,
+        userId: i,
         title: `Album Title${i}`,
         description: `Album description ${i}`,
         imageUrl: `http://example.io/album/${i}`,
