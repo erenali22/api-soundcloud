@@ -60,7 +60,7 @@ router.get(
 router.post(
   '/',
   validation,
-  async (req, res) => {
+  async (req, res, next) => {
     const { user } = req
     const { title, description, imageUrl } = req.body
     const album = await Album.create({ title, description, imageUrl, userId: user.id })
