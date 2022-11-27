@@ -6,7 +6,7 @@ module.exports = {
   async up(queryInterface) {
     // const userIdArray = await queryInterface.sequelize.query('select id from Users', { type: QueryTypes.SELECT })
     const data = []
-    for (let i = 0; i < 10; ++i) {
+    for (let i = 1; i < 9; ++i) {
       data.push({
         userId: i,
         title: `Album Title${i}`,
