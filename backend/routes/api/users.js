@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { setTokenCookie, generateToken, makeError } = require("../../utils/auth");
+const { setTokenCookie, makeError } = require("../../utils/auth");
 const { User, Song, Playlist } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");

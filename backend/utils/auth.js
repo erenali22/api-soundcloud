@@ -12,25 +12,25 @@ const makeError = (message, statusCode, errors) => {
   };
 };
 
-const generateToken = (user) => {
+// Sends a JWT Cookie
+const setTokenCookie = (res, user) => {
   // Create the token.
   const token = jwt.sign(
     { data: user.toSafeObject() },
-    "my secret",
-    { expiresIn: parseInt(expiresIn) }, // 604,800 seconds = 1 week
+    secret,
+    { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
   );
-  return token;
-};
 
-// Sends a JWT Cookie
-const setTokenCookie = (res, token) => {
   const isProduction = process.env.NODE_ENV === "production";
-  res.cookie("token", token, {
+
+  // Set the token cookie
+  res.cookie('token', token, {
     maxAge: expiresIn * 1000, // maxAge in milliseconds
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction && "Lax",
+    sameSite: isProduction && "Lax"
   });
+
   return token;
 };
 
@@ -71,6 +71,5 @@ module.exports = {
   setTokenCookie,
   restoreUser,
   requireAuth,
-  makeError,
-  generateToken,
+  makeError
 };
