@@ -1,5 +1,5 @@
 const express = require("express");
-const { Song, Album, Comment } = require('../../db/models');
+const { Song, Album, Comment, User } = require('../../db/models');
 const { makeError } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { query } = require("express-validator/check");
@@ -64,7 +64,9 @@ router.get(
         where: filter,
         limit: size,
         offset: page * size,
-      })
+      }),
+      page,
+      size,
     })
   }
 );
@@ -85,7 +87,15 @@ router.get(
   '/:songId',
   async (req, res, next) => {
     const songId = req.params['songId']
-    const song = await Song.findByPk(songId)
+    const song = await Song.findByPk(songId, {
+      include: [{
+        model: User,
+        as: 'Artist'
+      }, {
+        model: Album,
+        as: 'Album'
+      }]
+    })
     if (song) {
       return res.json(song)
     } else {
@@ -197,6 +207,7 @@ router.post(
 // Get all Comments by a Song's id
 router.get(
   '/:songId/comments',
+  requireAuth,
   async (req, res, next) => {
     const { songId } = req.params
     const song = await Song.findByPk(songId)
@@ -204,7 +215,13 @@ router.get(
       return next(makeError('Song couldn\'t be found', 404))
     }
     return res.json({
-      Comments: await Comment.findAll({ where: { songId } })
+      Comments: await Comment.findAll({
+        where: { songId }, include: [{
+          model: User,
+          as: 'Artist',
+          attributes:['id', 'username']
+        }]
+      })
     })
   }
 );

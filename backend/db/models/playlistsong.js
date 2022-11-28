@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   PlaylistSong.init({
+    id : {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
     order: DataTypes.INTEGER,
   }, {
     sequelize,

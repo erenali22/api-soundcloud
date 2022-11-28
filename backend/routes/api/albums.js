@@ -18,6 +18,7 @@ const router = express.Router();
 // Get all Albums
 router.get(
   '/',
+  requireAuth,
   async (_req, res) => {
     return res.json({
       Albums: await Album.findAll()
@@ -40,6 +41,7 @@ router.get(
 // Get all Albums of an Artist from an id
 router.get(
   '/:albumId',
+  requireAuth,
   async (req, res, next) => {
     const { albumId } = req.params
     const album = await Album.findByPk(albumId, {

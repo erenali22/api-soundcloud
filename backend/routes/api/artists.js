@@ -1,12 +1,14 @@
 const express = require("express");
 const { Album, User } = require('../../db/models');
 const { makeError } = require("../../utils/auth");
+const { requireAuth } = require("../../utils/auth");
 
 const router = express.Router();
 
 // Get all Albums of an Artist from an id
 router.get(
   '/:artistId/albums',
+  requireAuth,
   async (req, res, next) => {
     const { artistId } = req.params
     const user = await User.findByPk(artistId)

@@ -68,6 +68,7 @@ router.get("/:playlistId", async (req, res, next) => {
       {
         model: Song,
         as: "Songs",
+        through: { attributes: [] },
       },
     ],
   });

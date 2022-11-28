@@ -1,9 +1,10 @@
 const express = require("express");
 
 const { setTokenCookie, makeError } = require("../../utils/auth");
-const { User, Song, Playlist } = require("../../db/models");
+const { User, Song, Playlist, Album } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const { requireAuth } = require("../../utils/auth");
 
 const validateSignup = [
   check("email")
@@ -63,17 +64,26 @@ router.post("/", validateSignup, async (req, res, next) => {
 });
 
 // Get details of an Artist from an id
-router.get("/:userId", async (req, res, next) => {
+router.get("/:userId", requireAuth, async (req, res, next) => {
   const { userId } = req.params
-  const user = await User.findByPk(userId)
+  const user = await User.findByPk(userId, {
+    include: [{
+      model: Song,
+      as: 'Songs',
+      attributes: ['imageUrl']
+    }]
+  })
   if (!user) {
     return next(makeError('Artist couldn\'t be found', 404))
   }
-  return res.json(user)
+  let converted = JSON.parse(JSON.stringify(user))
+  converted.totalSongs = await Song.count({ where: { userId: user.id } })
+  converted.totalAlbums = await Album.count({ where: { userId: user.id } })
+  return res.json(converted)
 })
 
 // Get all Songs of an Artist from an id
-router.get("/:userId/songs", async (req, res, next) => {
+router.get("/:userId/songs", requireAuth, async (req, res, next) => {
   const { userId } = req.params
   const user = await User.findByPk(userId)
   if (!user) {
@@ -85,7 +95,7 @@ router.get("/:userId/songs", async (req, res, next) => {
 })
 
 // Get details of an Artist from an id
-router.get("/:userId", async (req, res, next) => {
+router.get("/:userId", requireAuth, async (req, res, next) => {
   const { userId } = req.params
   const user = await User.findByPk(userId)
   if (!user) {
@@ -95,7 +105,7 @@ router.get("/:userId", async (req, res, next) => {
 })
 
 // Get all Playlists of an Artist from an id
-router.get("/:userId/playlists", async (req, res, next) => {
+router.get("/:userId/playlists", requireAuth, async (req, res, next) => {
   const { userId } = req.params
   const user = await User.findByPk(userId)
   if (!user) {
