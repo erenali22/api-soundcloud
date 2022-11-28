@@ -32,8 +32,7 @@ router.post(
       return next(makeError('Invalid credentials', 401))
     }
 
-    const token = generateToken(user)
-    setTokenCookie(res, token);
+    const token = await setTokenCookie(res, user);
 
     return res.json({
       ...user.toSafeObject(),

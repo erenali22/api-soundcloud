@@ -6,7 +6,7 @@ const albumsRouter = require('./albums.js');
 const artistsRouter = require('./artists.js');
 const commentRouter = require('./comments.js');
 const playlistRouter = require('./playlists.js');
-const { restoreUser, requireAuth } = require("../../utils/auth.js");
+const { restoreUser } = require("../../utils/auth.js");
 
 router.use(restoreUser);
 // router.use(requireAuth)
