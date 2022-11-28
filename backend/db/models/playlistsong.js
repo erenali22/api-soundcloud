@@ -13,8 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    songId: DataTypes.INTEGER,
-    playlistId: DataTypes.INTEGER,
     order: DataTypes.INTEGER,
   }, {
     sequelize,
