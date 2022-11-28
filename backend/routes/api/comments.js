@@ -3,6 +3,7 @@ const { Comment } = require('../../db/models');
 const { makeError } = require("../../utils/auth");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const { requireAuth } = require("../../utils/auth");
 
 const validateComments = [
   check('body')
@@ -17,6 +18,7 @@ const router = express.Router();
 // Edit a Comment
 router.put(
   '/:commentId',
+  requireAuth,
   validateComments,
   async (req, res, next) => {
     const { commentId } = req.params
@@ -38,6 +40,7 @@ router.put(
 // Delete a Comment
 router.delete(
   '/:commentId',
+  requireAuth,
   async (req, res, next) => {
     const { commentId } = req.params
     const { user } = req

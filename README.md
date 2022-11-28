@@ -977,7 +977,7 @@ Returns all the playlists created by the current user.
 - Request
 
   - Method: GET
-  - URL: /api/my/playlists
+  - URL: /api/playlists/current
   - Body: none
 
 - Successful Response

@@ -96,6 +96,7 @@ router.get(
 
 router.delete(
   '/:songId',
+  requireAuth,
   async (req, res, next) => {
     const songId = req.params['songId']
     const { user } = req
@@ -117,6 +118,7 @@ router.delete(
 // Create a Song
 router.post(
   '/',
+  requireAuth,
   validateSong,
   async (req, res, next) => {
     const { albumId, title, description, url, imageUrl } = req.body
@@ -134,6 +136,7 @@ router.post(
 // Edit a Song
 router.put(
   '/:songId',
+  requireAuth,
   validateSong,
   async (req, res, next) => {
     const { user } = req
@@ -154,6 +157,7 @@ router.put(
 
 router.delete(
   '/:songId',
+  requireAuth,
   async (req, res, next) => {
     const { user } = req
     const { songId } = req.params
@@ -175,6 +179,7 @@ router.delete(
 // Create a Comment for a Song based on the Song's id
 router.post(
   '/:songId/comments',
+  requireAuth,
   validateComments,
   async (req, res, next) => {
     const { songId } = req.params

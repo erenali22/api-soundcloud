@@ -5,6 +5,7 @@ const { setTokenCookie, makeError } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { requireAuth } = require("../../utils/auth");
 
 const validateLogin = [
   check('credential')
@@ -44,6 +45,7 @@ router.post(
 // Get the Current User
 router.get(
   '/',
+  requireAuth,
   (req, res) => {
     const { user } = req;
     return res.json({

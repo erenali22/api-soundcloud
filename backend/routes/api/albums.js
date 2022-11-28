@@ -3,6 +3,7 @@ const { Album, User, Song } = require('../../db/models');
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 const { makeError } = require("../../utils/auth");
+const { requireAuth } = require("../../utils/auth");
 
 const validation = [
   check('title')
@@ -27,6 +28,7 @@ router.get(
 // Get all Albums created by the Current User
 router.get(
   '/current',
+  requireAuth,
   async (req, res) => {
     const { user } = req
     return res.json({
@@ -59,6 +61,7 @@ router.get(
 // Create an Album
 router.post(
   '/',
+  requireAuth,
   validation,
   async (req, res, next) => {
     const { user } = req
@@ -70,6 +73,7 @@ router.post(
 
 router.delete(
   '/:albumId',
+  requireAuth,
   async (req, res, next) => {
     const { albumId } = req.params
     const { user } = req
@@ -91,6 +95,7 @@ router.delete(
 // Edit an Album
 router.put(
   '/:albumId',
+  requireAuth,
   validation,
   async (req, res, next) => {
     const { albumId } = req.params
