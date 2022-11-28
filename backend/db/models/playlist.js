@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Playlist extends Model {
     static associate(models) {
-      Playlist.belongsToMany(models.Song, { through: models.PlaylistSong, foreignKey: "playlistId" })
+      Playlist.belongsToMany(models.Song, { through: models.PlaylistSong, foreignKey: "playlistId", onDelete: 'CASCADE', hooks: true })
     }
   }
   Playlist.init({
