@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
         through: models.PlaylistSong,
         as: "Songs",
         foreignKey: "songId",
-        onDelete: "CASCADE",
-        hooks: true,
+        // onDelete: "CASCADE",
+        // hooks: true,
       });
       Song.hasMany(models.Comment, {
         foreignKey: "songId",
