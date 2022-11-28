@@ -218,7 +218,6 @@ router.get(
       Comments: await Comment.findAll({
         where: { songId }, include: [{
           model: User,
-          as: 'Artist',
           attributes:['id', 'username']
         }]
       })
