@@ -1,27 +1,42 @@
 {
-  "name": "api-soundcloud",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "## Database Schema Design",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npm --prefix backend install backend",
-    "dev:backend": "npm install --prefix backend start",
-    "sequelize": "npm run --prefix backend sequelize",
-    "sequelize-cli": "npm run --prefix backend sequelize-cli",
-    "start": "npm start --prefix backend"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/erenali22/api-soundcloud.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sequelize": "sequelize",
+    "sequelize-cli": "sequelize-cli",
+    "start": "per-env",
+    "start:development": "nodemon -r dotenv/config ./bin/www",
+    "start:production": "node ./bin/www",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed:all",
+    "db:seed:undo": "npx sequelize-cli db:seed:undo:all"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/erenali22/api-soundcloud/issues"
-  },
-  "homepage": "https://github.com/erenali22/api-soundcloud#readme",
   "dependencies": {
-    "pg": "^8.8.0"
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "csurf": "^1.11.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^6.14.2",
+    "helmet": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "per-env": "^1.0.2",
+    "pg": "^8.8.0",
+    "sequelize": "^6.25.5",
+    "sequelize-cli": "^6.5.2"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^6.0.0",
+    "nodemon": "^2.0.20",
+    "sqlite3": "^5.1.2"
   }
 }
