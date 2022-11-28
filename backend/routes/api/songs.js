@@ -193,13 +193,13 @@ router.post(
   validateComments,
   async (req, res, next) => {
     const { songId } = req.params
-    const userId = req.user.id;
+    const { user } = req
     const { body } = req.body
     const song = await Song.findByPk(songId)
     if (!song) {
       return next(makeError('Song couldn\'t be found', 404))
     }
-    const comment = await Comment.create({ userId, songId, body })
+    const comment = await Comment.create({ userId: user.id, songId, body })
     return res.json(comment)
   }
 );
