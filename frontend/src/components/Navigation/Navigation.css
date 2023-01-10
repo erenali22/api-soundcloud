@@ -1,1 +1,68 @@
+/* Navigation links */
+ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 
+  li {
+    margin: 0 1rem;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  a:hover, a.active {
+    color: #333;
+  }
+
+  /* Profile dropdown menu */
+  .profile-dropdown {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+    position: absolute;
+    right: 0;
+    top: 3.5rem;
+    z-index: 1;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .profile-dropdown li {
+    align-items: center;
+    display: flex;
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .profile-dropdown li:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .profile-dropdown button {
+    background-color: transparent;
+    border: 0;
+    color: #333;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    outline: 0;
+    padding: 0;
+    text-transform: uppercase;
+  }
+
+  .profile-dropdown button:hover {
+    color: #000;
+  }
