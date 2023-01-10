@@ -37,7 +37,7 @@ function Navigation({ isLoaded }){
       <li>
         <NavLink exact to="/">Home</NavLink>
       </li>
-      {isLoaded && sessionLinks}
+      {(!sessionUser || isLoaded ) && sessionLinks}
     </ul>
   );
 }
