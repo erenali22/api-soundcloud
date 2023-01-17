@@ -11,7 +11,7 @@ module.exports = {
         userId: i,
         title: `Album Title${i}`,
         description: `Album description ${i}`,
-        imageUrl: `http://example.io/album/${i}`,
+        imageUrl: `https://picsum.photos/300`,
         createdAt: new Date(),
         updatedAt: new Date(),
       })

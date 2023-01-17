@@ -14,7 +14,7 @@ module.exports = {
         title: `Song Title ${i}`,
         description: `Song Description ${i}`,
         url: `http://example.io/song/${i}`,
-        imageUrl: `http://example.io/songImage/${i}`,
+        imageUrl: `https://loremflickr.com/300/300?random=${i}`,
         createdAt: new Date(),
         updatedAt: new Date(),
       })

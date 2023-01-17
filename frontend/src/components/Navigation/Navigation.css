@@ -1,68 +1,97 @@
 /* Navigation links */
-ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+ul.header {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 
-  li {
-    margin: 0 1rem;
-  }
+  height: 2.5em;
+  align-items: center;
+  justify-content: center;
+  background: #333;
 
-  a {
-    color: #000;
-    text-decoration: none;
-  }
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
-  a:hover, a.active {
-    color: #333;
-  }
+ul.header li {
+  display: flex;
+  align-self: stretch;
+}
 
-  /* Profile dropdown menu */
-  .profile-dropdown {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0.5rem 0;
-    position: absolute;
-    right: 0;
-    top: 3.5rem;
-    z-index: 1;
-  }
+ul.header li a {
+  text-decoration: none;
+  color: #ccc;
+  width: 5em;
+  text-align: center;
+  background: transparent;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #111;
+  font-size: 14px;
+}
 
-  .hidden {
-    display: none;
-  }
+ul.header li a.active {
+  color: white;
+  background: #111;
+}
 
-  .profile-dropdown li {
-    align-items: center;
-    display: flex;
-    margin: 0.5rem;
-    padding: 0.5rem;
-  }
+ul.header li a:hover {
+  color: white !important;
+}
 
-  .profile-dropdown li:not(:last-child) {
-    border-bottom: 1px solid #ccc;
-  }
+ul.header li button {
+  align-self: center;
+  background: transparent;
+  color: white;
+  border: 1px solid #666;
+  padding: 4px 11px 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  margin: 0 1em;
+}
 
-  .profile-dropdown button {
-    background-color: transparent;
-    border: 0;
-    color: #333;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 600;
-    outline: 0;
-    padding: 0;
-    text-transform: uppercase;
-  }
+ul.header li button:hover {
+  border-color: #999;
+}
 
-  .profile-dropdown button:hover {
-    color: #000;
-  }
+/* Profile dropdown menu */
+.profile-dropdown {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: 0;
+  border-radius: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+}
+
+.profile-dropdown>li {
+  line-height: 2em;
+  font-size: 12px;
+  padding: 0 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.profile-dropdown>li.logout:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+
+}
+
+.profile-dropdown i {
+  width: 10.5px;
+  height: 10.5px;
+}
+
+.hidden {
+  display: none;
+}

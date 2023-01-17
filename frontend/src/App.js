@@ -1,31 +1,55 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
-import SignupFormModal from "./components/SignupFormModal";
-import LoginFormModal from "./components/LoginFormModal";
+import {
+  Switch,
+  Route,
+} from "react-router-dom";
+import Songs from "./components/Songs";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import { restoreCSRF } from './store/csrf'
+import { Home } from "./components/Home";
+import Albums from "./components/Albums";
+import { useSelector } from 'react-redux';
 
 function App() {
+
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const sessionUser = useSelector(state => state.session.user);
+  const loaded = useSelector(state => state.session.loaded);
+  const signedIn = useSelector(state => state.session.signedIn);
+
   useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    restoreCSRF().then(() => {
+      dispatch(sessionActions.restoreUser())
+        .then(() => {
+          dispatch(sessionActions.setLoaded(true))
+          dispatch(sessionActions.setSignedIn(true))
+        })
+        .catch(() => {
+          dispatch(sessionActions.setLoaded(true))
+          dispatch(sessionActions.setSignedIn(false))
+          if (window.location.pathname !== '/') {
+            window.location = '/'
+          }
+        })
+    })
   }, [dispatch]);
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route path="/signup">
-            <SignupFormModal />
-          </Route>
-          <Route path="/login">
-            <LoginFormModal />
-          </Route>
-        </Switch>
-      )}
+      <Navigation isLoaded={loaded} signedIn={signedIn} user={sessionUser} />
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/songs" exact>
+          <Songs />
+        </Route>
+        <Route path="/albums" exact>
+          <Albums />
+        </Route>
+      </Switch>
     </>
   );
 }

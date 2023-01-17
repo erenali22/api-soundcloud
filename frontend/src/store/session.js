@@ -2,6 +2,8 @@ import { csrfFetch } from './csrf';
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const SET_LOADED = 'session/loaded';
+const SET_SIGNED_IN = 'session/signedIn';
 
 const setUser = (user) => {
     return {
@@ -16,21 +18,21 @@ const removeUser = () => {
     };
 };
 
-export const login = (user) => async (dispatch) => {
-    const { credential, password } = user;
-    const response = await csrfFetch('/api/session', {
-        method: 'POST',
-        body: JSON.stringify({
-            credential,
-            password,
-        }),
-    });
-    const data = await response.json();
-    dispatch(setUser(data.user));
-    return response;
+export const setLoaded = (loaded) => {
+    return {
+        type: SET_LOADED,
+        payload: loaded
+    };
 };
 
-const initialState = { user: null };
+export const setSignedIn = (signedIn) => {
+    return {
+        type: SET_SIGNED_IN,
+        payload: signedIn
+    };
+};
+
+const initialState = { user: null, loaded: false, signedIn: null };
 
 const sessionReducer = (state = initialState, action) => {
     let newState;
@@ -42,16 +44,39 @@ const sessionReducer = (state = initialState, action) => {
         case REMOVE_USER:
             newState = Object.assign({}, state);
             newState.user = null;
+            newState.signedIn = null;
             return newState;
+        case SET_LOADED:
+            newState = Object.assign({}, state);
+            newState.loaded = action.payload;
+            return newState
+        case SET_SIGNED_IN:
+            newState = Object.assign({}, state);
+            newState.signedIn = action.payload;
+            return newState
         default:
             return state;
     }
 };
 
-export const restoreUser = () => async dispatch => {
+export const login = (user) => async (dispatch) => {
+    const { credential, password } = user;
+    const response = await csrfFetch('/api/session', {
+        method: 'POST',
+        body: JSON.stringify({
+            credential,
+            password,
+        }),
+    });
+    const data = await response.json();
+    dispatch(setUser(data));
+    return response;
+};
+
+export const restoreUser = () => async (dispatch) => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
-    dispatch(setUser(data.user));
+    dispatch(setUser(data));
     return response;
 };
 
@@ -68,7 +93,7 @@ export const signup = (user) => async (dispatch) => {
       }),
     });
     const data = await response.json();
-    dispatch(setUser(data.user));
+    dispatch(setUser(data));
     return response;
   };
 

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
+import * as albumActions from "../../store/album";
 import "./SignupForm.css";
+import { mapErrors } from "../../util";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -19,19 +21,26 @@ function SignupFormModal() {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(
-        sessionActions.signup({
-          email,
-          username,
-          firstName,
-          lastName,
-          password,
-        }),
-      )
-        .then(closeModal)
+      return dispatch(sessionActions.signup({
+        email,
+        username,
+        firstName,
+        lastName,
+        password,
+      })).then(() => {
+        return dispatch(albumActions.createAlbum({
+          title: 'Default Album',
+          description: 'default album created by system',
+          imageUrl: 'https://picsum.photos/200',
+        }))
+      }).then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
+          if (data && data.errors) {
+            setErrors(mapErrors(data.errors));
+          } else {
+            setErrors([])
+          }
         });
     }
     return setErrors([
@@ -41,14 +50,14 @@ function SignupFormModal() {
 
   return (
     <>
-      <div className="SignupForm">
-        <h1>Sign Up</h1>
+      <div className="Form">
+        <div className="title">Sign Up</div>
+        {errors?.length > 0 && <ul className="form-error">
+          {errors.map((error, idx) => (
+            <li key={idx} className="warning">{error}</li>
+          ))}
+        </ul>}
         <form onSubmit={handleSubmit}>
-          <ul>
-            {errors.map((error, idx) => (
-              <li key={idx}>{error}</li>
-            ))}
-          </ul>
           <label>
             Email
             <input
@@ -103,7 +112,8 @@ function SignupFormModal() {
               required
             />
           </label>
-          <button type="submit">Sign Up</button>
+          <button className="submit" type="submit">OK</button>
+          <button className="submit" onClick={closeModal}>Cancel</button>
         </form>
       </div>
     </>
