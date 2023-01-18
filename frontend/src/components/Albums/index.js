@@ -9,14 +9,15 @@ import './style.css'
 export default function Albums() {
   const dispatch = useDispatch();
   const albums = useSelector(state => state.album.albums);
+  const sessionUser = useSelector(state => state.session.user);
   const [page, setPage] = useState(1)
 
   useEffect(() => {
     dispatch(albumActions.getAlbumsOfCurrentUser())
   }, [dispatch, page])
 
-  const visibleAlbums = albums.slice(0, page * albumActions.PAGE_SIZE)
-  const hasMore = page * albumActions.PAGE_SIZE < albums.length
+  const visibleAlbums = albums?.slice(0, page * albumActions.PAGE_SIZE)
+  const hasMore = page * albumActions.PAGE_SIZE < albums?.length
 
   const confirmDelete = (id) => {
     dispatch(albumActions.deleteAlbum(id)).then(() => {
@@ -25,7 +26,7 @@ export default function Albums() {
     })
   }
 
-  return <div className='panel main'>
+  return sessionUser && <div className='panel main'>
     <div className='title'>
       <span className='text'>Your Albums</span>
       <OpenModalButton
@@ -33,11 +34,12 @@ export default function Albums() {
         buttonText="Create Album"
         modalComponent={<CreateAlbumModal onClose={() => { setPage(1) }} />} />
     </div>
-    <div className='grid'>
+    {albums !== null && <><div className='grid'>
       {
         visibleAlbums.map(album => {
           return <div className='item' key={album.id}>
-            <div className='image-wrapper'>
+            <div className='image-wrapper' onClick={() => window.location = `/albums/${album.id}`}>
+              <div className='mask'>View</div>
               <img src={album.imageUrl} alt={album.title} />
             </div>
             <div className='text'>{album.title}</div>
@@ -57,6 +59,8 @@ export default function Albums() {
         })
       }
     </div>
-    {hasMore && <button className='load-more' style={{ marginTop: '10px' }} onClick={() => setPage(page => page + 1)}>Load More</button>}
+      {hasMore && <button className='load-more' style={{ marginTop: '10px' }} onClick={() => setPage(page => page + 1)}>Load More</button>}
+    </>
+    }
   </div>
 }

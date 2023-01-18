@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as songsAction from "../../../store/songs";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import * as albumAction from '../../../store/album'
 import './style.css'
@@ -24,7 +24,8 @@ function CreateSongModal({ edit, song, onClose }) {
     const method = edit ? songsAction.editSong : songsAction.createSong
     return dispatch(method(songData))
       .then(() => {
-        onClose && onClose()
+        console.log(11111)
+        if (onClose) onClose()
         closeModal()
       })
       .catch(
@@ -59,13 +60,13 @@ function CreateSongModal({ edit, song, onClose }) {
         <div className="title">{edit ? `Edit ${song.title}` : 'Add A New Song'}</div>
         {errors.length > 0 && <ul className="form-error">
           {errors.map((error, idx) => (
-            <li key={idx} className="warning">{error}</li>
+            <li key={error} className="warning">{error}</li>
           ))}
         </ul>}
         <form onSubmit={handleSubmit}>
           <label>Add To Album
             <select required onChange={setSongDataField.bind(this, 'albumId')}>
-              {albums.map(album => (<option value={album.id}>{album.title}</option>))}
+              {albums.map(album => (<option key={album.id} value={album.id}>{album.title}</option>))}
             </select>
           </label>
           <label>

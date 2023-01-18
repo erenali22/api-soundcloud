@@ -17,6 +17,8 @@ app.use(express.json());
 
 const routes = require("./routes");
 
+app.disable('etag');
+
 // Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
@@ -59,6 +61,7 @@ app.use((err, _req, _res, next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
+  console.log(err)
   res.status(err.statusCode || 500);
   res.json(err);
 });

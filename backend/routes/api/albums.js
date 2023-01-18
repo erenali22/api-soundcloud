@@ -50,7 +50,11 @@ router.get(
         as: 'Artist'
       }, {
         model: Song,
-        as: 'Songs'
+        as: 'Songs',
+        include: [{
+          model: User,
+          as: 'Artist'
+        }]
       }]
     })
     if (!album) {

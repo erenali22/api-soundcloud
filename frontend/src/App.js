@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   Switch,
@@ -11,6 +11,7 @@ import { restoreCSRF } from './store/csrf'
 import { Home } from "./components/Home";
 import Albums from "./components/Albums";
 import { useSelector } from 'react-redux';
+import AlbumDetails from "./components/Albums/AlbumDetails";
 
 function App() {
 
@@ -48,6 +49,9 @@ function App() {
         </Route>
         <Route path="/albums" exact>
           <Albums />
+        </Route>
+        <Route path="/albums/:id">
+          <AlbumDetails />
         </Route>
       </Switch>
     </>

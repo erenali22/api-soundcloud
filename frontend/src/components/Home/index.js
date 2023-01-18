@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import * as songActions from "../../store/songs";
-import * as albmActions from '../../store/album';
+import * as albumActions from '../../store/album';
 import './style.css'
 
 export function Home() {
@@ -15,7 +15,11 @@ export function Home() {
       return
     }
     dispatch(songActions.getSongsOfCurrentUser())
-    dispatch(albmActions.getAlbumsOfCurrentUser())
+    dispatch(albumActions.getAlbumsOfCurrentUser())
+    return () => {
+      dispatch(songActions.setSongs(null))
+      dispatch(albumActions.setAlbums(null))
+    }
   }, [dispatch, sessionUser])
 
   return <div className='main home'>
@@ -31,7 +35,7 @@ export function Home() {
         <h2>Your Albums</h2>
         <div className='list'>
           {
-            albums.slice(-5).map(album => (
+            albums?.slice(-5).map(album => (
               <div className='list-item' key={album.id}>
                 <img src={album.imageUrl} alt={album.title}></img>
                 <span className='name'>{album.title}</span>
@@ -43,7 +47,7 @@ export function Home() {
       <div className='wrapper'>
         <h2>Your Songs</h2>
         <div className='list'>
-          {songs.slice(-5).map(song => (
+          {songs?.slice(-5).map(song => (
             <div className='list-item' key={song.id}>
               <img src={song.imageUrl} alt={song.title}></img>
               <span className='name'>{song.title}</span>

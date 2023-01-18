@@ -14,14 +14,17 @@ export default function Songs() {
   const [hasMore, setHasMore] = useState(true)
 
   useEffect(() => {
+    if (page === 0) {
+      return
+    }
     dispatch(songActions.getAllSongs({ page, replace: page === 1 }))
       .then(songs => setHasMore(!!songs.length))
   }, [dispatch, page])
 
   const confirmDelete = (id) => {
     dispatch(songActions.deleteSong(id)).then(() => {
+      setPage(0)
       setPage(1)
-      dispatch(songActions.getSongsOfCurrentUser())
     })
   }
 
@@ -31,11 +34,11 @@ export default function Songs() {
       <OpenModalButton
         className='general-button'
         buttonText=" Add A Song"
-        modalComponent={<CreateSongModal onClose={() => { setPage(1) }} />} />
+        modalComponent={<CreateSongModal onClose={() => { setPage(0); setPage(1) }} />} />
     </div>
     <div className='grid'>
       {
-        songs.map(song => {
+        songs && songs.map(song => {
           return <div className='item' key={song.id}>
             <div className='image-wrapper'>
               <img src={song.imageUrl} alt={song.title} />
@@ -46,7 +49,7 @@ export default function Songs() {
               <OpenModalButton
                 className='general-button small'
                 buttonText="Edit"
-                modalComponent={<CreateSongModal song={song} edit onClose={() => { setPage(1) }} />} />
+                modalComponent={<CreateSongModal song={song} edit onClose={() => { setPage(0); setPage(1) }} />} />
               <OpenModalButton
                 className='general-button small'
                 buttonText="Delete"

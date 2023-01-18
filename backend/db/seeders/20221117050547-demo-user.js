@@ -8,8 +8,8 @@ module.exports = {
     for (let i = 0; i < 10; ++i) {
       data.push({
         username: `FakeUser${i}`,
-        firstName: 'FirstName${i}',
-        lastName: 'LastName${i}',
+        firstName: `First${i}`,
+        lastName: `Last${i}`,
         email: `demo${i}@user.io`,
         hashedPassword: bcrypt.hashSync('password'),
       })

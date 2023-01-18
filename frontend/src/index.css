@@ -1,4 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Helvetica'); */
+@import url('https://fonts.googleapis.com/css2?family=Helvetica');
 
 body,
 html,
@@ -101,7 +101,13 @@ button.load-more {
   letter-spacing: -1px;
   font-size: 14px;
   height: 21px;
+  margin-top: 10px;
 }
+
+.Form button.submit+.Form button.submit {
+  margin-top: 0;
+}
+
 
 .Form button.submit:hover,
 button.load-more:hover {
@@ -138,11 +144,12 @@ button.general-button {
   cursor: pointer;
   color: #333;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 22px;
   white-space: nowrap;
   font-weight: 100;
   text-align: center;
   box-sizing: border-box;
+  vertical-align: middle;
 }
 
 button.general-button.small {

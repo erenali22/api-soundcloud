@@ -10,7 +10,7 @@ export const setAlbums = (albums) => {
   };
 };
 
-const initialState = { albums: [] };
+const initialState = { albums: null };
 
 const albumsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -54,6 +54,13 @@ export const deleteAlbum = (id) => async () => {
     method: "DELETE"
   });
   return response;
+};
+
+export const getAlbum = (id) => async () => {
+  const response = await csrfFetch(`/api/albums/${id}`, {
+    method: "GET"
+  });
+  return await response.json();
 };
 
 

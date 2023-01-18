@@ -8,6 +8,7 @@ function ProfileButton({ user }) {
   const ulRef = useRef();
 
   const openMenu = (e) => {
+    e.preventDefault()
     if (showMenu) return;
     setShowMenu(true);
     const box = e.target.getBoundingClientRect()
@@ -30,7 +31,7 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.logout()).then(()=>{
+    dispatch(sessionActions.logout()).then(() => {
       window.location = '/'
     })
   };
@@ -39,7 +40,8 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <a style={{ padding: '10px', cursor: 'pointer', width: 'auto' }} onClick={openMenu} className={`${showMenu ? 'active' : ''}`}>
+      <a href='/'
+        style={{ padding: '10px', cursor: 'pointer', width: 'auto' }} onClick={openMenu} className={`${showMenu ? 'active' : ''}`}>
         {user.firstName}{' '}{user.lastName}<i style={{ marginLeft: '10px', zoom: '0.7' }} className="fa-solid fa-chevron-down"></i>
       </a>
       <ul className={ulClassName} ref={ulRef}>

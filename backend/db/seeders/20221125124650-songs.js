@@ -11,8 +11,8 @@ module.exports = {
       data.push({
         userId: i,
         albumId: i,
-        title: `Song Title ${i}`,
-        description: `Song Description ${i}`,
+        title: `User${i}'s Song`,
+        description: `User${i}'s Song Description`,
         url: `http://example.io/song/${i}`,
         imageUrl: `https://loremflickr.com/300/300?random=${i}`,
         createdAt: new Date(),

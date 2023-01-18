@@ -9,7 +9,7 @@ module.exports = {
     for (let i = 1; i < 9; ++i) {
       data.push({
         userId: i,
-        title: `Album Title${i}`,
+        title: `Album${i}`,
         description: `Album description ${i}`,
         imageUrl: `https://picsum.photos/300`,
         createdAt: new Date(),

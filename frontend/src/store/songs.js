@@ -28,9 +28,10 @@ const songsReducer = (state = initialState, action) => {
         songs: action.payload.songs
       }
     case APPEND_SONGS:
+      console.log(222, state.songs)
       return {
         ...state,
-        songs: [...state.songs, ...action.payload.songs]
+        songs: [...(state.songs || []), ...action.payload.songs]
       }
     default:
       return state;
@@ -38,7 +39,7 @@ const songsReducer = (state = initialState, action) => {
 };
 
 export const getAllSongs = ({ page, title, replace }) => async (dispatch) => {
-  const response = await csrfFetch(`/api/songs?title=${title ? encodeURIComponent(title) : ''}&page=${+page || 1}&size=${PAGE_SIZE}`);
+  const response = await csrfFetch(`/api/songs?page=${(+page || 1) - 1}&size=${PAGE_SIZE}${title ? `&title=${encodeURIComponent(title)}` : ''}`);
   const data = await response.json();
   if (replace) {
     dispatch(setSongs(data.Songs))

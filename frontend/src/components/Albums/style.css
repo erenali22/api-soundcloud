@@ -13,24 +13,39 @@ div.album {
   float: left;
 }
 
-/* div.album image {
-  width: 200px;
-  height: 200px;
-} */
-
 div.album div.album-title,
 div.album div.album-actions {
   height: 20px
 }
 
-div.image-wrapper img {
-  max-width: 100%;
-  max-height: 200;
-  padding-bottom: 100%;
-  display: flex;
+div.image-wrapper {
+  position: relative;
+}
+
+div.image-wrapper:hover {
+  cursor: pointer;
 }
 
 div.image-wrapper img {
+  width: 100%;
   align-self: start;
-  flex-grow: 1;
+}
+
+div.image-wrapper>.mask {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.6;
+  z-index: 1;
+  color: #999;
+  align-items: center;
+  justify-content: center;
+}
+
+div.image-wrapper:hover>.mask {
+  display: flex;
 }

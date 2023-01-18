@@ -10,8 +10,8 @@
     "start": "per-env",
     "start:development": "nodemon -r dotenv/config ./bin/www",
     "start:production": "node ./bin/www",
-    "db:migrate": "npx sequelize-cli db:migrate",
-    "db:seed": "npx sequelize-cli db:seed:all",
+    "db:migrate": "rm ./sqlite-db && npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed:all --debug",
     "db:seed:undo": "npx sequelize-cli db:seed:undo:all"
   },
   "keywords": [],
