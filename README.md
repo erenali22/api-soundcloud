@@ -1,4 +1,4 @@
-# SoundCloud
+# Sound Cloud Application
 
 ## Database Schema Design
 
@@ -25,6 +25,7 @@ All endpoints that require a current user to be logged in.
 
   - Status Code: 401
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -45,6 +46,7 @@ correct role(s) or permission(s).
 
   - Status Code: 403
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -66,6 +68,7 @@ user's information.
   - Method: POST
   - URL: /api/users
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -78,11 +81,11 @@ user's information.
       "password": "secret password"
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -96,11 +99,11 @@ user's information.
       "token": ""
     }
     ```
-
 - Error response: User already exists with the specified email
 
   - Status Code: 403
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -113,11 +116,11 @@ user's information.
       }
     }
     ```
-
 - Error response: User already exists with the specified username
 
   - Status Code: 403
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -130,11 +133,11 @@ user's information.
       }
     }
     ```
-
 - Error response: Body validation errors
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -162,6 +165,7 @@ information.
   - Method: POST
   - URL: /api/session
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -171,11 +175,11 @@ information.
       "password": "secret password"
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -189,11 +193,11 @@ information.
       "token": ""
     }
     ```
-
 - Error Response: Invalid credentials
 
   - Status Code: 401
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -203,11 +207,11 @@ information.
       "statusCode": 401
     }
     ```
-
 - Error response: Body validation errors
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -232,11 +236,11 @@ Returns the information about the current user that is logged in.
   - Method: GET
   - URL: /api/session
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -262,11 +266,11 @@ Returns all the songs.
   - Method: GET
   - URL: /api/songs
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -298,11 +302,11 @@ Returns all the songs created by the current user.
   - Method: GET
   - URL: /api/songs/current
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -334,11 +338,11 @@ Returns all the songs created by the specified artist.
   - Method: GET
   - URL: /api/users/:userId/songs
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -359,11 +363,11 @@ Returns all the songs created by the specified artist.
       ]
     }
     ```
-
 - Error response: Couldn't find an Artist with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -384,11 +388,11 @@ Returns the details of a song specified by its id.
   - Method: GET
   - URL: /api/songs/:songId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -415,11 +419,11 @@ Returns the details of a song specified by its id.
       }
     }
     ```
-
 - Error response: Couldn't find a Song with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -440,6 +444,7 @@ Creates and returns a new song with or without an album.
   - Method: POST
   - URL: /api/songs
   - Headers:
+
     - Content-Type: application/json
   - Body without an album:
 
@@ -452,7 +457,6 @@ Creates and returns a new song with or without an album.
       "albumId": null
     }
     ```
-
   - Body with an album:
 
     ```json
@@ -464,11 +468,11 @@ Creates and returns a new song with or without an album.
       "albumId": 1
     }
     ```
-
 - Successful Response
 
   - Status Code: 201
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -485,11 +489,11 @@ Creates and returns a new song with or without an album.
       "previewImage": "image url"
     }
     ```
-
 - Error Response: Body validation error
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -503,12 +507,12 @@ Creates and returns a new song with or without an album.
       }
     }
     ```
-
 - Error response: Couldn't find an Album with the specified albumId if albumId
   is not null
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -530,6 +534,7 @@ Updates and returns an existing song.
   - Method: PUT
   - URL: /api/songs/:songId
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -542,11 +547,11 @@ Updates and returns an existing song.
       "albumId": null
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -563,11 +568,11 @@ Updates and returns an existing song.
       "previewImage": "image url"
     }
     ```
-
 - Error Response: Body validation error
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -581,11 +586,11 @@ Updates and returns an existing song.
       }
     }
     ```
-
 - Error response: Couldn't find a Song with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -607,11 +612,11 @@ Deletes an existing song.
   - Method: DELETE
   - URL: /api/songs/:songId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -621,11 +626,11 @@ Deletes an existing song.
       "statusCode": 200
     }
     ```
-
 - Error response: Couldn't find a Song with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -648,11 +653,11 @@ Returns all the playlists created by the specified artist.
   - Method: GET
   - URL: /api/users/:userId/playlists
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -670,11 +675,11 @@ Returns all the playlists created by the specified artist.
       ]
     }
     ```
-
 - Error response: Couldn't find an Artist with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -695,6 +700,7 @@ Creates and returns a new playlist.
   - Method: POST
   - URL: /api/playlists
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -704,11 +710,11 @@ Creates and returns a new playlist.
       "imageUrl": "image url"
     }
     ```
-
 - Successful Response
 
   - Status Code: 201
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -722,11 +728,11 @@ Creates and returns a new playlist.
       "previewImage": "image url"
     }
     ```
-
 - Error Response: Body validation error
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -751,6 +757,7 @@ Add a song to a playlist specified by the playlist's id.
   - Method: POST
   - URL: /api/playlists/:playlistId/songs
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -759,11 +766,11 @@ Add a song to a playlist specified by the playlist's id.
       "songId": 1
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -774,11 +781,11 @@ Add a song to a playlist specified by the playlist's id.
       "songId": 1
     }
     ```
-
 - Error response: Couldn't find a Playlist with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -788,11 +795,11 @@ Add a song to a playlist specified by the playlist's id.
       "statusCode": 404
     }
     ```
-
 - Error response: Couldn't find a Song with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -813,11 +820,11 @@ Returns the details of a playlist specified by its id.
   - Method: GET
   - URL: /api/playlists/:playlistId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -844,11 +851,11 @@ Returns the details of a playlist specified by its id.
       ]
     }
     ```
-
 - Error response: Couldn't find a Playlist with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -870,6 +877,7 @@ Updates and returns an existing playlist.
   - Method: Method: PUT
   - URL: /api/playlists/:playlistId
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -879,11 +887,11 @@ Updates and returns an existing playlist.
       "imageUrl": "image url"
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -897,11 +905,11 @@ Updates and returns an existing playlist.
       "previewImage": "image url"
     }
     ```
-
 - Error Response: Body validation error
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -914,11 +922,11 @@ Updates and returns an existing playlist.
       }
     }
     ```
-
 - Error response: Couldn't find a Playlist with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -940,11 +948,11 @@ Deletes an existing playlist.
   - Method: DELETE
   - URL: /api/playlists/:playlistId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -954,11 +962,11 @@ Deletes an existing playlist.
       "statusCode": 200
     }
     ```
-
 - Error response: Couldn't find a Playlist with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -979,11 +987,11 @@ Returns all the playlists created by the current user.
   - Method: GET
   - URL: /api/playlists/current
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1014,6 +1022,7 @@ Create and return a new comment for a song specified by id.
   - Method: POST
   - URL: /api/songs/:songId/comments
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1022,11 +1031,11 @@ Create and return a new comment for a song specified by id.
       "body": "I love this song!"
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1040,11 +1049,11 @@ Create and return a new comment for a song specified by id.
       "updatedAt": "2021-11-19 20:39:36"
     }
     ```
-
 - Error Response: Body validation errors
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1057,11 +1066,11 @@ Create and return a new comment for a song specified by id.
       }
     }
     ```
-
 - Error response: Couldn't find a Song with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1082,11 +1091,11 @@ Returns all the comments that belong to a song specified by id.
   - Method: GET
   - URL: /api/songs/:songId/comments
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1108,11 +1117,11 @@ Returns all the comments that belong to a song specified by id.
       ]
     }
     ```
-
 - Error response: Couldn't find a Song with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1134,6 +1143,7 @@ Update and return an existing comment.
   - Method: PUT
   - URL: /api/comments/:commentId
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1142,11 +1152,11 @@ Update and return an existing comment.
       "body": "I love this song!"
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1160,11 +1170,11 @@ Update and return an existing comment.
       "updatedAt": "2021-11-20 20:00:00"
     }
     ```
-
 - Error Response: Body validation errors
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1177,11 +1187,11 @@ Update and return an existing comment.
       }
     }
     ```
-
 - Error response: Couldn't find a Comment with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1203,11 +1213,11 @@ Delete an existing comment.
   - Method: DELETE
   - URL: /api/songs/comments/:commentId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1217,11 +1227,11 @@ Delete an existing comment.
       "statusCode": 200
     }
     ```
-
 - Error response: Couldn't find a Comment with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1244,11 +1254,11 @@ Returns all the Albums.
   - Method: GET
   - URL: /api/albums
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1278,11 +1288,11 @@ Returns all the Albums created by the current user.
   - Method: GET
   - URL: /api/my/albums
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1312,11 +1322,11 @@ Returns all the albums created by the specified artist.
   - Method: GET
   - URL: /api/artists/:userId/albums
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1335,11 +1345,11 @@ Returns all the albums created by the specified artist.
       ]
     }
     ```
-
 - Error response: Couldn't find an Artist with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1360,11 +1370,11 @@ Returns the details of an album specified by its id.
   - Method: GET
   - URL: /api/albums/:albumId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1397,11 +1407,11 @@ Returns the details of an album specified by its id.
       ]
     }
     ```
-
 - Error response: Couldn't find an Album with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1422,6 +1432,7 @@ Creates and returns a new album.
   - Method: POST
   - URL: /api/albums
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1432,11 +1443,11 @@ Creates and returns a new album.
       "imageUrl": "image url"
     }
     ```
-
 - Successful Response
 
   - Status Code: 201
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1451,11 +1462,11 @@ Creates and returns a new album.
       "previewImage": "image url"
     }
     ```
-
 - Error Response: Body validation error
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1480,6 +1491,7 @@ Updates and returns an existing album.
   - Method: PUT
   - URL: /api/albums/:albumId
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1490,11 +1502,11 @@ Updates and returns an existing album.
       "imageUrl": "image url"
     }
     ```
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1509,11 +1521,11 @@ Updates and returns an existing album.
       "previewImage": "image url"
     }
     ```
-
 - Error Response: Body validation error
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1526,11 +1538,11 @@ Updates and returns an existing album.
       }
     }
     ```
-
 - Error response: Couldn't find an Album with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1552,11 +1564,11 @@ Deletes an existing album.
   - Method: DELETE
   - URL: /api/albums/:albumId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1566,11 +1578,11 @@ Deletes an existing album.
       "statusCode": 200
     }
     ```
-
 - Error response: Couldn't find an Album with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1593,11 +1605,11 @@ Returns the details of an artist specified by their id.
   - Method: GET
   - URL: /api/users/:userId
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1610,11 +1622,11 @@ Returns the details of an artist specified by their id.
       "previewImage": "image url"
     }
     ```
-
 - Error response: Couldn't find an Artists with the specified id
 
   - Status Code: 404
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1640,11 +1652,11 @@ Return songs filtered by query parameters.
     - title: string, optional
     - createdAt: string, optional
   - Body: none
-
 - Successful Response
 
   - Status Code: 200
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
@@ -1667,11 +1679,11 @@ Return songs filtered by query parameters.
       "size": 25
     }
     ```
-
 - Error Response: Query parameter validation errors
 
   - Status Code: 400
   - Headers:
+
     - Content-Type: application/json
   - Body:
 
