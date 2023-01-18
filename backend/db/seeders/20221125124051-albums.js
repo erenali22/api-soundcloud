@@ -1,10 +1,16 @@
 'use strict';
 const { QueryTypes } = require('sequelize');
 
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA;  // define your schema in options object
+}
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
     // const userIdArray = await queryInterface.sequelize.query('select id from Users', { type: QueryTypes.SELECT })
+    options.tableName = 'Albums';
     const data = []
     for (let i = 1; i < 9; ++i) {
       data.push({
@@ -16,10 +22,11 @@ module.exports = {
         updatedAt: new Date(),
       })
     }
-    await queryInterface.bulkInsert('Albums', data)
+    await queryInterface.bulkInsert(options, data)
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete('Albums')
+    options.tableName = 'Albums';
+    await queryInterface.bulkDelete(options)
   }
 };
