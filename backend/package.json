@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "render-postbuild": "npm run build --prefix frontend",
-    "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",
-    "dev:backend": "npm install --prefix backend start",
-    "dev:frontend": "npm install --prefix frontend start",
-    "sequelize": "npm run --prefix backend sequelize",
-    "sequelize-cli": "npm run --prefix backend sequelize-cli",
-    "start": "npm start --prefix backend",
-    "build": "npm run build --prefix backend"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sequelize": "sequelize",
+    "sequelize-cli": "sequelize-cli",
+    "start": "per-env",
+    "start:development": "nodemon -r dotenv/config ./bin/www",
+    "start:production": "node ./bin/www",
+    "db:migrate": "rm ./sqlite-db && npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed:all --debug",
+    "db:seed:undo": "npx sequelize-cli db:seed:undo:all"
   },
   "keywords": [],
   "author": "",
