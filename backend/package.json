@@ -14,8 +14,7 @@
     "db:migrate": "rm ./sqlite-db && npx sequelize-cli db:migrate",
     "db:seed": "npx sequelize-cli db:seed:all --debug",
     "db:seed:undo": "npx sequelize-cli db:seed:undo:all",
-    "rebuild": "rm db/dev.db && npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all",
-
+    "rebuild": "rm db/dev.db && npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",
